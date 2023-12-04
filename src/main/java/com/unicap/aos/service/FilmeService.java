@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.unicap.aos.domain.dto.FilmeDTO;
+import com.unicap.aos.domain.dto.FilmeDTO;
+import com.unicap.aos.domain.entity.Filme;
 import com.unicap.aos.domain.entity.Categoria;
 import com.unicap.aos.domain.entity.Filme;
 import com.unicap.aos.exception.NotFoundException;
@@ -36,6 +38,34 @@ public class FilmeService {
         filme.setReleaseYear(filmeDTO.getReleaseYear());
 
         Filme filmeSave = filmeRepository.save(filme);
+
+        return new FilmeDTO(filmeSave);
+    }
+
+    public FilmeDTO update(Long id, FilmeDTO filmeDTO) {
+     
+
+        Optional<Filme> searchedFilme = filmeRepository.findById(id);
+        if (searchedFilme.isEmpty()) throw new NotFoundException(Filme.class,id);
+
+        Filme foundAvaliacao = searchedFilme.get();
+
+        if (filmeDTO.getName() != null)
+            if (!filmeDTO.getName().isBlank()) foundAvaliacao.setName(filmeDTO.getName().trim());
+        if (filmeDTO.getDuration() != null)
+            foundAvaliacao.setDuration(filmeDTO.getDuration());
+        if (filmeDTO.getReleaseYear() != null)
+            foundAvaliacao.setReleaseYear(filmeDTO.getReleaseYear());
+        if (filmeDTO.getCategoryId() != null) {
+           Optional<Categoria> categoria = categoriaRepository.findById(filmeDTO.getCategoryId()); 
+
+            if (categoria.isEmpty()) {
+                throw new NotFoundException(Filme.class , filmeDTO.getCategoryId());
+            }
+            foundAvaliacao.setCategory(categoria.get());
+        } 
+
+        Filme filmeSave = filmeRepository.save(foundAvaliacao);
 
         return new FilmeDTO(filmeSave);
     }

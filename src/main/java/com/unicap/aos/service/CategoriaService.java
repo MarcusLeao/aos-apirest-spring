@@ -6,8 +6,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.unicap.aos.domain.dto.AvaliacaoDTO;
 import com.unicap.aos.domain.dto.CategoriaDTO;
+import com.unicap.aos.domain.entity.Avaliacao;
 import com.unicap.aos.domain.entity.Categoria;
+import com.unicap.aos.domain.entity.Filme;
 import com.unicap.aos.exception.NotFoundException;
 import com.unicap.aos.repository.CategoriaRepository;
 
@@ -25,6 +28,22 @@ public class CategoriaService {
         categoria.setName(categoriaDTO.getName());
 
         Categoria categoriaSave = categoriaRepository.save(categoria);
+
+        return new CategoriaDTO(categoriaSave);
+    }
+    public CategoriaDTO update(Long id, CategoriaDTO categoriaDTO) {
+     
+
+        Optional<Categoria> searchedCategoria = categoriaRepository.findById(id);
+        if (searchedCategoria.isEmpty()) throw new NotFoundException(Avaliacao.class,id);
+
+        Categoria foundCategoria = searchedCategoria.get();
+
+        if (categoriaDTO.getName() != null)
+            if (!categoriaDTO.getName().isBlank()) foundCategoria.setName(categoriaDTO.getName().trim());
+        
+
+        Categoria categoriaSave = categoriaRepository.save(foundCategoria);
 
         return new CategoriaDTO(categoriaSave);
     }

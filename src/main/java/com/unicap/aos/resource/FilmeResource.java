@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.unicap.aos.domain.dto.AvaliacaoDTO;
 import com.unicap.aos.domain.dto.FilmeDTO;
 import com.unicap.aos.domain.dto.ResponseDTO;
 import com.unicap.aos.service.FilmeService;
@@ -41,6 +43,11 @@ public class FilmeResource {
     public ResponseEntity<ResponseDTO<FilmeDTO>> create(@RequestBody @Valid FilmeDTO filmeDTO){
 
         return ResponseEntity.ok(new ResponseDTO<>(filmeService.create(filmeDTO)));
+    }
+    @PutMapping
+    public ResponseEntity<ResponseDTO<FilmeDTO>> update(@PathVariable Long id,@RequestBody @Valid FilmeDTO filmeDTO){
+
+        return ResponseEntity.ok(new ResponseDTO<>(filmeService.update(id,filmeDTO)));
     }
 
     @DeleteMapping(value = "/{id}")

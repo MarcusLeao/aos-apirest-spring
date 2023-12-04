@@ -1,5 +1,6 @@
 package com.unicap.aos.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,6 +37,34 @@ public class AvaliacaoService {
         avaliacao.setScore(avaliacaoDTO.getScore());
 
         Avaliacao avaliacaoSave = avaliacaoRepository.save(avaliacao);
+
+        return new AvaliacaoDTO(avaliacaoSave);
+    }
+
+    public AvaliacaoDTO update(Long id, AvaliacaoDTO avaliacaoDTO) {
+     
+
+        Optional<Avaliacao> searchedAvaliacao = avaliacaoRepository.findById(id);
+        if (searchedAvaliacao.isEmpty()) throw new NotFoundException(Avaliacao.class,id);
+
+        Avaliacao foundAvaliacao = searchedAvaliacao.get();
+
+        if (avaliacaoDTO.getCommentary() != null)
+            if (!avaliacaoDTO.getCommentary().isBlank()) foundAvaliacao.setComentary(avaliacaoDTO.getCommentary().trim());
+        if (avaliacaoDTO.getDate() != null)
+            foundAvaliacao.setDate(avaliacaoDTO.getDate());
+        if (avaliacaoDTO.getScore() != null)
+            foundAvaliacao.setScore(avaliacaoDTO.getScore());
+        if (avaliacaoDTO.getFilmeId() != null) {
+           Optional<Filme> filme = filmeRepository.findById(avaliacaoDTO.getFilmeId()); 
+
+            if (filme.isEmpty()) {
+                throw new NotFoundException(Filme.class , avaliacaoDTO.getFilmeId());
+            }
+            foundAvaliacao.setFilme(filme.get());
+        } 
+
+        Avaliacao avaliacaoSave = avaliacaoRepository.save(foundAvaliacao);
 
         return new AvaliacaoDTO(avaliacaoSave);
     }

@@ -29,6 +29,8 @@ public class AvaliacaoDTO {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
+    
+    @NotNull
     @JsonProperty("filme_id")
     private Long filmeId;
 

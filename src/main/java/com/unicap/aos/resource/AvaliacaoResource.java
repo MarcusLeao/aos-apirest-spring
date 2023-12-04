@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,9 +39,14 @@ public class AvaliacaoResource {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseDTO<AvaliacaoDTO>> create(@RequestBody @Valid AvaliacaoDTO filmeDTO){
+    public ResponseEntity<ResponseDTO<AvaliacaoDTO>> create(@RequestBody @Valid AvaliacaoDTO avaliacaoDTO){
 
-        return ResponseEntity.ok(new ResponseDTO<>(avaliacaoService.create(filmeDTO)));
+        return ResponseEntity.ok(new ResponseDTO<>(avaliacaoService.create(avaliacaoDTO)));
+    }
+    @PutMapping
+    public ResponseEntity<ResponseDTO<AvaliacaoDTO>> update(@PathVariable Long id,@RequestBody @Valid AvaliacaoDTO avaliacaoDTO){
+
+        return ResponseEntity.ok(new ResponseDTO<>(avaliacaoService.update(id,avaliacaoDTO)));
     }
 
     @DeleteMapping(value = "/{id}")
