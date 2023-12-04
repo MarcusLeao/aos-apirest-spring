@@ -2,9 +2,11 @@ package com.unicap.aos.domain.dto;
 
 import com.unicap.aos.domain.entity.Filme;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,9 +21,10 @@ public class FilmeDTO {
     private String name;
     private Long duration;
     @NotNull
-    @Size(min = 1955,max =  9999)
+    @Min(value = 1955)
+    @Max(value = 9999)
     private Long releaseYear;
-    @NotNull
+    @NotNull(message = "É necessario criar a categoria antes do filme!")
     private Long categoryId;
 
     public FilmeDTO(Filme filme){

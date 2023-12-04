@@ -18,6 +18,7 @@ import java.time.LocalDate;
 public class AvaliacaoDTO {
     
     private Long id;
+    @NotNull
     @Min(1)
     @Max(10)
     private Integer score;

@@ -33,6 +33,7 @@ public class FilmeService {
         filme.setCategory(categoria.get());
         filme.setName(filmeDTO.getName());
         filme.setDuration(filmeDTO.getDuration());
+        filme.setReleaseYear(filmeDTO.getReleaseYear());
 
         Filme filmeSave = filmeRepository.save(filme);
 
