@@ -21,8 +21,8 @@ public class FilmeDTO {
     private String name;
     private Long duration;
     @NotNull
-    @Min(value = 1955)
-    @Max(value = 9999)
+    @Min(1955)
+    @Max(9999)
     private Long releaseYear;
     @NotNull(message = "É necessario criar a categoria antes do filme!")
     private Long categoryId;

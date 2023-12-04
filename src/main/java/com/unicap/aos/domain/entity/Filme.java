@@ -32,8 +32,8 @@ public class Filme {
     private Long duration;
 
     @NotNull
-    @Min(value = 1955)
-    @Max(value = 9999)
+    @Min(1955)
+    @Max(9999)
     @Column(name="release_year")
     private Long releaseYear;
 
